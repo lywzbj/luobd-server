@@ -1,5 +1,6 @@
 package com.luobd.server.common.entities;
 
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -40,6 +41,12 @@ public class ResponseData<T> {
         responseData.setMsg(msg);
         return  responseData;
     }
+
+
+    public String toJson() {
+        return JSONObject.toJSONString(this);
+    }
+
 
 
 }

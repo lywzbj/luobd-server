@@ -47,7 +47,7 @@ public class SwaggerConfig {
     @Bean
     public Docket createRestApiMobile() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfoMobile())
+                .apiInfo(apiInfo())
                 .groupName("移动端")
                 //是否开启 (true 开启  false隐藏。生产环境建议隐藏)
                 //.enable(false)
@@ -59,17 +59,22 @@ public class SwaggerConfig {
                 .build();
     }
 
-    private ApiInfo apiInfoMobile() {
-        return new ApiInfoBuilder()
-                //设置文档标题(API名称)
-                .title("萝卜丁")
-                //文档描述
-                .description("后台管理端接口文档")
-                //版本号
-                .version("1.0.0")
+    @Bean
+    public Docket createRestApiCommon() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .groupName("公共接口")
+                //是否开启 (true 开启  false隐藏。生产环境建议隐藏)
+                //.enable(false)
+                .select()
+                //扫描的路径包,设置basePackage会将包下的所有被@Api标记类的所有方法作为api
+                .apis(RequestHandlerSelectors.basePackage("com.luobd.server.api.common"))
+                //指定路径处理PathSelectors.any()代表所有的路径
+                .paths(PathSelectors.any())
                 .build();
-
     }
+
+
 
 
 }

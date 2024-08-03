@@ -44,10 +44,6 @@
     <module.common.version>1.0-SNAPSHOT</module.common.version>
   </properties>
 
-
-
-
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -60,7 +56,6 @@
         <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${mybatis-plus.version}</version>
       </dependency>
-
       <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
@@ -68,7 +63,6 @@
         <type>jar</type>
         <scope>compile</scope>
       </dependency>
-
       <!--swagger-->
       <dependency>
         <groupId>io.springfox</groupId>
@@ -82,10 +76,13 @@
         <version>${swagger.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+
     </dependencies>
-
-
-
   </dependencyManagement>
 
 
