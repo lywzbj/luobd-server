@@ -1,7 +1,9 @@
 package com.luobd.server.config;
 
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -13,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(prefix = "swagger",name = "enabled",havingValue = "true")
 public class SwaggerConfig {
 
 
@@ -32,6 +35,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
+        System.out.println("执行加载");
         return new ApiInfoBuilder()
                 //设置文档标题(API名称)
                 .title("萝卜丁")
