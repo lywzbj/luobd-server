@@ -18,13 +18,13 @@ import java.util.Scanner;
 // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 public class CodeGenerator {
 
-    public static String projectDir = "\\services\\hospital";
+    public static String projectDir = "\\service\\base";
 
 
-    public static String classPackage = "com.luobd.server.business";
+    public static String classPackage = "com.luobd.server.base";
 
 
-    public static String url = "jdbc:mysql://localhost:3306/syt_hosp?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC";
+    public static String url = "jdbc:mysql://localhost:3306/luobd?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC";
 
 
     public static String username = "root";

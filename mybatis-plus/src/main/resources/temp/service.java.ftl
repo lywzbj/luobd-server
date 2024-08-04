@@ -2,7 +2,7 @@ package ${package.Service};
 
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
-import com.luobd.server.common.model.ResponseData;
+import com.luobd.server.common.entities.ResponseData;
 import java.util.List;
 
 /**

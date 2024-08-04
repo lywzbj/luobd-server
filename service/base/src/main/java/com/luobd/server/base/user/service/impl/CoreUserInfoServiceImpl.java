@@ -1,9 +1,10 @@
-package ${package.ServiceImpl};
+package com.luobd.server.base.user.service.impl;
 
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-import ${package.Service}.${table.serviceName};
-import ${superServiceImplClassPackage};
+import com.luobd.server.base.user.entity.CoreUserInfo;
+import com.luobd.server.base.user.mapper.CoreUserInfoMapper;
+import com.luobd.server.base.user.service.ICoreUserInfoService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -12,23 +13,19 @@ import com.luobd.server.common.entities.ResponseData;
 
 /**
  * <p>
- * ${table.comment!} 服务实现类
+ *  服务实现类
  * </p>
  *
- * @author ${author}
- * @since ${date}
+ * @author Luoyu
+ * @since 2024-08-04
  */
 @Service
-<#if kotlin>
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
-
-}
-<#else>
-public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+@Primary
+public class CoreUserInfoServiceImpl extends ServiceImpl<CoreUserInfoMapper, CoreUserInfo> implements ICoreUserInfoService {
 
 
   @Resource
-  private ${table.mapperName} baseMapper;
+  private CoreUserInfoMapper baseMapper;
 
 
 @Override
@@ -57,4 +54,3 @@ public ResponseData<Boolean> delete(Long id) {
 
 
 }
-</#if>

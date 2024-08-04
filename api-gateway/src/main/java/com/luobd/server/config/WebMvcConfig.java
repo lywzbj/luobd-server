@@ -23,9 +23,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         patterns.add("/api/auth/login");
         patterns.add("/doc.html");
         patterns.add("/swagger-resources/**");
-        patterns.add("/css/**");
+        patterns.add("/**/*.css");
         patterns.add("/images/**");
-        patterns.add("/js/**");
+        patterns.add("/**/*.js");
         //注册拦截器类，添加黑名单(addPathPatterns("/**")),‘/*’只拦截一个层级，'/**'拦截全部
         // 和白名单(excludePathPatterns("List类型参数"))，将不必拦截的路径添加到List列表中
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(patterns);
