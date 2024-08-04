@@ -46,6 +46,12 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>5.8.16</version>
+        </dependency>
+
 
     </dependencies>
 </project>
