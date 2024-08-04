@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://127.0.0.1:3306/syt_hosp?characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/luobd?characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
 
 
