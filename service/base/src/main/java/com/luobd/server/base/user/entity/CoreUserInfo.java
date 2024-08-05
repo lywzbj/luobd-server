@@ -45,7 +45,7 @@ public class CoreUserInfo implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime updateTime;
 
-    private Blob deleted;
+    private Boolean deleted;
 
     @TableField("birthDate")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -68,5 +68,10 @@ public class CoreUserInfo implements Serializable {
     @TableField("accountId")
     private Long accountId;
 
+    @TableField("createUserId")
+    private Long createUserId;
 
+
+    @TableField("updateUserId")
+    private Long updateUserId;
 }

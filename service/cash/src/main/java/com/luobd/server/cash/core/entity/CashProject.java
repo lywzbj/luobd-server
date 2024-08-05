@@ -52,5 +52,11 @@ public class CashProject implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    @TableField("createUserId")
+    private Long createUserId;
+
+
+    @TableField("updateUserId")
+    private Long updateUserId;
 
 }

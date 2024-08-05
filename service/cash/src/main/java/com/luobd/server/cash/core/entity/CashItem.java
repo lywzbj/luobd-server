@@ -57,6 +57,14 @@ public class CashItem implements Serializable {
     @TableField("projectId")
     private Long projectId;
 
+
+    @TableField("createUserId")
+    private Long createUserId;
+
+
+    @TableField("updateUserId")
+    private Long updateUserId;
+
     @TableField("cashUserName")
     private String cashUserName;
 
