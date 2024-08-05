@@ -67,6 +67,13 @@ public class SwaggerConfig {
                 .securitySchemes(security());
     }
 
+
+    // 配置全局token
+    private List<ApiKey> security() {
+        return Lists.newArrayList(new ApiKey("LuobdAuth", "LuobdAuth", "header"));
+    }
+
+
     @Bean
     public Docket createRestApiCommon() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -84,9 +91,7 @@ public class SwaggerConfig {
 
 
 
-    private List<ApiKey> security() {
-        return Lists.newArrayList(new ApiKey("LuobdAuth", "LuobdAuth", "header"));
-    }
+
 
 
 

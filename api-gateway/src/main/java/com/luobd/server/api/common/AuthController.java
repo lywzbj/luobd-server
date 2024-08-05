@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping(value = "/api/auth")
@@ -31,7 +33,7 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "登录接口")
-    public ResponseData<String> login(@RequestBody LoginInput input) {
+    public ResponseData<String> login(@RequestBody @Valid LoginInput input) {
         return authService.auth(input.getUsername(),input.getPassword());
     }
 
@@ -45,10 +47,12 @@ public class AuthController {
 class LoginInput {
 
     @ApiModelProperty(value = "用户名",required = true)
+    @NotBlank(message = "请输入用户名")
     private String username;
 
 
     @ApiModelProperty(value = "密码  MD5加密字符串",required = true)
+    @NotBlank(message = "请输入密码")
     private String password;
 
 }
