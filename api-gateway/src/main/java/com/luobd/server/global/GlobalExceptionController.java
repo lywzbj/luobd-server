@@ -19,6 +19,7 @@ public class GlobalExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseData<?> errorHandler(Exception e){
+        ResponseData<?> error = ResponseData.error("error");
         if(e instanceof MethodArgumentNotValidException) {
             List<ObjectError> errors = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors();
             StringBuilder sb = new StringBuilder();
@@ -30,12 +31,15 @@ public class GlobalExceptionController {
                     sb.append(",");
                 }
             }
-            return ResponseData.error(sb.toString());
+            error.setMsg(sb.toString());
         }else if(e instanceof TokenValidException) {
-            ResponseData<?> error = ResponseData.error("Not auth");
             error.setCode(HttpStatus.UNAUTHORIZED.value());
+            error.setMsg("Not Auth");
+        }else {
+            e.printStackTrace();
+            error.setMsg(e.getMessage());
         }
-        return ResponseData.error(e.getMessage());
+        return error;
     }
 
 }
