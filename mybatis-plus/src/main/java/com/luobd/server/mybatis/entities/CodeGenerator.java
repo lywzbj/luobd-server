@@ -18,10 +18,10 @@ import java.util.Scanner;
 // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 public class CodeGenerator {
 
-    public static String projectDir = "\\service\\cash";
+    public static String projectDir = "\\service\\base";
 
 
-    public static String classPackage = "com.luobd.server.cash";
+    public static String classPackage = "com.luobd.server.base";
 
 
     public static String url = "jdbc:mysql://localhost:3306/luobd?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC";
@@ -163,14 +163,15 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        //strategy.setSuperEntityClass("Mode");
         strategy.setEntityLombokModel(true);
+      //  strategy.setSuperEntityClass(BaseEntity.class);
+        strategy.setLogicDeleteFieldName("deleted");
         strategy.setRestControllerStyle(true);
 
         // 公共父类
        // strategy.setSuperControllerClass("你");
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id");
+       // strategy.setSuperEntityColumns("id");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
         //strategy.setTablePrefix(pc.getModuleName() + "_");
