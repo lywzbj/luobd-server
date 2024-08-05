@@ -1,7 +1,6 @@
 package com.luobd.server.base.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.google.common.collect.Lists;
 import com.luobd.server.base.user.entity.CoreAccount;
 import com.luobd.server.base.user.service.IAuthService;
 import com.luobd.server.base.user.service.ICoreAccountService;

@@ -1,17 +1,20 @@
 package com.luobd.server.config;
 
 
+import com.google.common.collect.Lists;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
 
 @Configuration
 @EnableSwagger2
@@ -31,11 +34,11 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.luobd.server.api.pc"))
                 //指定路径处理PathSelectors.any()代表所有的路径
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .securitySchemes(security());
     }
 
     private ApiInfo apiInfo() {
-        System.out.println("执行加载");
         return new ApiInfoBuilder()
                 //设置文档标题(API名称)
                 .title("萝卜丁")
@@ -60,7 +63,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.luobd.server.api.mobile"))
                 //指定路径处理PathSelectors.any()代表所有的路径
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .securitySchemes(security());
     }
 
     @Bean
@@ -78,6 +82,11 @@ public class SwaggerConfig {
                 .build();
     }
 
+
+
+    private List<ApiKey> security() {
+        return Lists.newArrayList(new ApiKey("LuobdAuth", "LuobdAuth", "header"));
+    }
 
 
 

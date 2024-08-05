@@ -1,0 +1,14 @@
+
+
+spring:
+  datasource:
+    username: root
+    password: luoyu666@@
+    url: jdbc:mysql://sh-cynosdbmysql-grp-owvaxg56.sql.tencentcdb.com:23451/luobd?characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+
+swagger:
+  enabled: true
+
+
+

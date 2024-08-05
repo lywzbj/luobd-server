@@ -6,6 +6,7 @@ import com.luobd.server.cash.core.input.CreateProjectInput;
 import com.luobd.server.cash.core.mapper.CashProjectMapper;
 import com.luobd.server.cash.core.service.ICashProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.luobd.server.common.utils.SnowIdWorker;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -51,19 +52,19 @@ public ResponseData<Boolean> delete(Long id) {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseData<Long> create(CreateProjectInput input) {
-
         QueryWrapper<CashProject> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("projectName",input.getProjectName());
         int count = this.count(queryWrapper);
         if(count > 0) {
             return ResponseData.error("项目名称已存在");
         }
-
         CashProject project = new CashProject();
+        project.setId(SnowIdWorker.nextId());
         project.setProjectName(input.getProjectName());
         project.setProjectDate(input.getProjectDate());
         project.setRemark(input.getRemark());
-        return null;
+        this.save(project);
+        return ResponseData.success(project.getId());
     }
 
 
