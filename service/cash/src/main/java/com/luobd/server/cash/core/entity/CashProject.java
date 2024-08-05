@@ -41,7 +41,7 @@ public class CashProject implements Serializable {
     @TableField("updateTime")
     private LocalDateTime updateTime;
 
-    private Blob deleted;
+    private Boolean deleted;
 
     @TableField("projectName")
     private String projectName;

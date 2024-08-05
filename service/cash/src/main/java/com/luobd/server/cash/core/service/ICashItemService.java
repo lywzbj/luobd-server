@@ -2,7 +2,12 @@ package com.luobd.server.cash.core.service;
 
 import com.luobd.server.cash.core.entity.CashItem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.luobd.server.cash.core.input.CashItemPageInput;
+import com.luobd.server.cash.core.input.CreateCashItemInput;
+import com.luobd.server.cash.core.input.UpdateCashItemInput;
 import com.luobd.server.common.entities.ResponseData;
+import com.luobd.server.common.entities.ResponsePageData;
+
 import java.util.List;
 
 /**
@@ -16,17 +21,22 @@ import java.util.List;
 public interface ICashItemService extends IService<CashItem> {
 
 
-   ResponseData<Boolean> delete(Long id);
+       ResponseData<Boolean> delete(Long id);
 
 
 
-  ResponseData<Boolean> batchDelete(List<Long> ids);
+      ResponseData<Boolean> batchDelete(List<Long> ids);
 
 
 
+      ResponseData<Long> create(CreateCashItemInput input);
+
+
+      ResponseData<Boolean> update(UpdateCashItemInput input);
 
 
 
+      ResponsePageData<CashItem> page(CashItemPageInput input);
 
 
 
