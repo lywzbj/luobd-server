@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luobd.server.base.core.mapper.CoreCategoryMapper">
+
+
+    <select id="page" resultType="com.luobd.server.base.core.entity.CoreCategory">
+        select * from core_category where deleted = 0
+        <if test="input.parentId != null">
+            and parentId = #{input.parentId}
+        </if>
+        <if test="input.categoryName">
+            and categoryName like concat('%',#{input.categoryName},'%')
+        </if>
+    </select>
+
+</mapper>
