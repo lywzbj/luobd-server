@@ -2,13 +2,12 @@ package com.luobd.server.common.entities;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
+@Data
 @ApiModel(description = "分页查询表单")
 public class PageInput {
 

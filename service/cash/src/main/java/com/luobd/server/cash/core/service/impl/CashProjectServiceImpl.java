@@ -76,6 +76,7 @@ public ResponseData<Boolean> delete(Long id) {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseData<Boolean> update(UpdateProjectInput input) {
+        System.out.println(input.getId());
         CashProject project = this.getById(input.getId());
         if(project == null) {
             return ResponseData.error("项目不存在");
