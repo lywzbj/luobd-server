@@ -12,6 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 @Slf4j
@@ -27,11 +28,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("LuobdAuth");
+        String token = request.getHeader("Authorization");
         if(token == null || token.isEmpty()) {
-            ResponseData<Object> error = ResponseData.error("Not Authorized");
-            error.setCode(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().print(error.toJson());
+            unauthorized(response, "Not Authorized");
+            return false;
+        }
+        token = token.replace("Bearer ","");
+        if(token.isEmpty()) {
+            unauthorized(response, "Not Authorized");
             return false;
         }
         try {
@@ -39,9 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             CurrentRequestHolder.set(subject);
         }catch (Exception e) {
             log.error("认证失败",e);
-            ResponseData<Object> error = ResponseData.error("Not Authorized");
-            error.setCode(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().print(error.toJson());
+            unauthorized(response, e.getMessage());
             return false;
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
@@ -53,4 +55,15 @@ public class LoginInterceptor implements HandlerInterceptor {
         CurrentRequestHolder.remove();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
+
+
+    private void unauthorized(HttpServletResponse response,String msg) throws IOException {
+        ResponseData<Object> error = ResponseData.error(msg);
+        error.setCode(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().print(error.toJson());
+    }
+
+
+
 }
