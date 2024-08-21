@@ -5,6 +5,7 @@ import com.luobd.server.common.entities.CurrentUserInfo;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.utils.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -28,6 +29,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.name())) {
+            return true;
+        }
         String token = request.getHeader("Authorization");
         if(token == null || token.isEmpty()) {
             unauthorized(response, "Not Authorized");
