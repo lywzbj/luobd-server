@@ -1,5 +1,6 @@
 package com.luobd.server.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -55,6 +56,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
+        // 忽略未知字段
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         SimpleModule module = new SimpleModule();
         module.addSerializer(Long.class, ToStringSerializer.instance);
         module.addSerializer(Long.TYPE,ToStringSerializer.instance);
