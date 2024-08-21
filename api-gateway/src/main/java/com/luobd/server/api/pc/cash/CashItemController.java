@@ -7,10 +7,7 @@ import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -45,5 +42,13 @@ public class CashItemController {
     public ResponseData<Boolean> page(@RequestBody @Valid UpdateCashItemInput input) {
         return cashItemService.update(input);
     }
+
+
+    @GetMapping(value = "/delete")
+    @ApiOperation(value = "删除明细")
+    public ResponseData<Boolean> page(@RequestParam(value = "id") Long id) {
+        return cashItemService.delete(id);
+    }
+
 
 }

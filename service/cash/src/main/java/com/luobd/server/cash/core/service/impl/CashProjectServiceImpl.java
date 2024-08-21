@@ -2,6 +2,7 @@ package com.luobd.server.cash.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import com.luobd.server.cash.core.entity.CashProject;
 import com.luobd.server.cash.core.input.CreateProjectInput;
 import com.luobd.server.cash.core.input.ProjectPageInput;
@@ -10,6 +11,7 @@ import com.luobd.server.cash.core.mapper.CashProjectMapper;
 import com.luobd.server.cash.core.service.ICashProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.common.entities.SelectDTO;
 import com.luobd.server.common.utils.SnowIdWorker;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -103,6 +105,21 @@ public ResponseData<Boolean> delete(Long id) {
         Page<CashProject> page = new Page<>(input.getPageIndex(),input.getPageSize());
         Page<CashProject> projectPage = baseMapper.page(page, input);
         return ResponsePageData.success(projectPage.getRecords(),projectPage.getTotal());
+    }
+
+    @Override
+    public ResponseData<List<SelectDTO>> select() {
+        List<CashProject> list = this.list();
+        List<SelectDTO> result = Lists.newArrayList();
+        if(list != null && list.size() > 0) {
+            list.forEach(item -> {
+                SelectDTO selectDTO = new SelectDTO();
+                selectDTO.setKey(item.getId().toString());
+                selectDTO.setValue(item.getProjectName());
+                result.add(selectDTO);
+            });
+        }
+        return ResponseData.success(result);
     }
 
 

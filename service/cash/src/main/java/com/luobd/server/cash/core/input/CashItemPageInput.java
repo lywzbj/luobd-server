@@ -15,11 +15,11 @@ public class CashItemPageInput extends PageInput {
 
 
     @ApiModelProperty(value = "项目Id")
-    @NotNull(message = "项目id不能为空")
+  //  @NotNull(message = "项目id不能为空")
     private Long projectId;
 
     @ApiModelProperty(value = "礼金人员")
-    @NotBlank(message = "请输入礼金人员")
+  //  @NotBlank(message = "请输入礼金人员")
     private String cashUserName;
 
     @ApiModelProperty(value = "项目名称")

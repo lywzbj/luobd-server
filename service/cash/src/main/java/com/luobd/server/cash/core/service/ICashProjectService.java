@@ -7,6 +7,7 @@ import com.luobd.server.cash.core.input.ProjectPageInput;
 import com.luobd.server.cash.core.input.UpdateProjectInput;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.common.entities.SelectDTO;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public interface ICashProjectService extends IService<CashProject> {
 
     ResponsePageData<CashProject> page(ProjectPageInput input);
 
+
+    ResponseData<List<SelectDTO>> select();
 
 
 
