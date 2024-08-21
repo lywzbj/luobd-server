@@ -3,6 +3,8 @@ package com.luobd.server.cash.core.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.sql.Blob;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -33,12 +35,13 @@ public class CashProject implements Serializable {
     @TableId
     private Long id;
 
+    @TableField(value = "status",fill = FieldFill.INSERT)
     private Integer status;
 
-    @TableField("createTime")
+    @TableField(value = "createTime",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @TableField("updateTime")
+    @TableField(value = "updateTime",fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     private Boolean deleted;

@@ -1,15 +1,18 @@
 package com.luobd.server.mybatis.entities;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,6 +167,13 @@ public class CodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
+        strategy.setTableFillList(Lists.newArrayList(
+                new TableFill("createTime", FieldFill.INSERT),
+                new TableFill("status", FieldFill.INSERT),
+                new TableFill("updateTime", FieldFill.UPDATE),
+                new TableFill("createUserId", FieldFill.INSERT),
+                new TableFill("updateUserId", FieldFill.UPDATE)
+                ));
       //  strategy.setSuperEntityClass(BaseEntity.class);
         strategy.setLogicDeleteFieldName("deleted");
         strategy.setRestControllerStyle(true);
