@@ -142,7 +142,7 @@ public ResponseData<Boolean> delete(Long id) {
                     item.setCategoryName(category.getCategoryName());
                     nodes.add(item);
                 }
-                node.setChild(nodes);
+                node.setChildren(nodes);
                 buildTree(list,nodes);
             }
         }

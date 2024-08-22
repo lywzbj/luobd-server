@@ -28,7 +28,7 @@ public class CategoryTreeNode {
 
 
     @ApiModelProperty(value = "下级节点")
-    private List<CategoryTreeNode> child;
+    private List<CategoryTreeNode> children;
 
 
 

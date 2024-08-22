@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = "基础数据 - 分类模块")
+@RequestMapping(value = "/api/core/category")
 public class BaseCategoryController {
 
     @Resource

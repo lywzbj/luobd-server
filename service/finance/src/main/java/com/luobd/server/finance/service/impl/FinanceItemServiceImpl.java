@@ -1,9 +1,12 @@
 package com.luobd.server.finance.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.luobd.server.base.core.entity.CoreCategory;
 import com.luobd.server.base.core.service.ICoreCategoryService;
+import com.luobd.server.common.entities.ResponsePageData;
 import com.luobd.server.finance.entity.FinanceItem;
 import com.luobd.server.finance.input.CreateFianceItemInput;
+import com.luobd.server.finance.input.FinancePageInput;
 import com.luobd.server.finance.input.UpdateFinanceItemInput;
 import com.luobd.server.finance.mapper.FinanceItemMapper;
 import com.luobd.server.finance.service.IFinanceItemService;
@@ -88,5 +91,11 @@ public ResponseData<Boolean> delete(Long id) {
         item.setCategoryName(category.getCategoryName());
         this.updateById(item);
         return ResponseData.success(Boolean.TRUE);
+    }
+
+    @Override
+    public ResponsePageData<FinanceItem> page(FinancePageInput input) {
+        Page<FinanceItem> page = baseMapper.page(new Page<>(input.getPageIndex(), input.getPageSize()), input);
+        return ResponsePageData.success(page.getRecords(), page.getTotal());
     }
 }

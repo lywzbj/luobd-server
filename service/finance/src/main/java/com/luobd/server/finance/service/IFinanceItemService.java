@@ -1,9 +1,11 @@
 package com.luobd.server.finance.service;
 
+import com.luobd.server.common.entities.ResponsePageData;
 import com.luobd.server.finance.entity.FinanceItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.finance.input.CreateFianceItemInput;
+import com.luobd.server.finance.input.FinancePageInput;
 import com.luobd.server.finance.input.UpdateFinanceItemInput;
 
 import java.util.List;
@@ -33,6 +35,9 @@ public interface IFinanceItemService extends IService<FinanceItem> {
 
   ResponseData<Boolean>  update(UpdateFinanceItemInput updateFinanceItemInput);
 
+
+
+  ResponsePageData<FinanceItem> page(FinancePageInput input);
 
 
 
