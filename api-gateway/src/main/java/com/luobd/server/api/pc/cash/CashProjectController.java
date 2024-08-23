@@ -1,5 +1,6 @@
 package com.luobd.server.api.pc.cash;
 
+import com.luobd.server.cash.core.dto.CashProjectPageDTO;
 import com.luobd.server.cash.core.entity.CashProject;
 import com.luobd.server.cash.core.input.CreateProjectInput;
 import com.luobd.server.cash.core.input.ProjectPageInput;
@@ -29,7 +30,7 @@ public class CashProjectController {
 
     @PostMapping(value = "/page")
     @ApiOperation(value = "获取数据")
-    public ResponsePageData<CashProject> page(@RequestBody @Valid ProjectPageInput input) {
+    public ResponsePageData<CashProjectPageDTO> page(@RequestBody @Valid ProjectPageInput input) {
         return cashProjectService.page(input);
     }
 

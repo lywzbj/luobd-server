@@ -1,5 +1,6 @@
 package com.luobd.server.cash.core.service;
 
+import com.luobd.server.cash.core.dto.CashProjectPageDTO;
 import com.luobd.server.cash.core.entity.CashProject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.luobd.server.cash.core.input.CreateProjectInput;
@@ -37,7 +38,7 @@ public interface ICashProjectService extends IService<CashProject> {
 
 
 
-    ResponsePageData<CashProject> page(ProjectPageInput input);
+    ResponsePageData<CashProjectPageDTO> page(ProjectPageInput input);
 
 
     ResponseData<List<SelectDTO>> select();

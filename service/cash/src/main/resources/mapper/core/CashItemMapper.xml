@@ -23,4 +23,15 @@
         order by  createTime desc
     </select>
 
+    <select id="totalAmount" resultType="com.luobd.server.cash.core.dto.CashProjectTotalAmount">
+        select sum(amount) as totalAmount,projectId from cash_item where deleted = 0
+        <if test="ids != null and ids.size() > 0">
+            and projectId in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        group by projectId
+    </select>
+
 </mapper>

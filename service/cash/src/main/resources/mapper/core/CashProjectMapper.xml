@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.luobd.server.cash.core.mapper.CashProjectMapper">
 
-    <select id="page" resultType="com.luobd.server.cash.core.entity.CashProject">
+    <select id="page" resultType="com.luobd.server.cash.core.dto.CashProjectPageDTO">
         select * from cash_project where deleted = 0
         <if test="input.projectName != null and input.projectName.length > 0">
             and projectName like concat('%',#{input.projectName},'%')

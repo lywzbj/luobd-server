@@ -1,12 +1,16 @@
 package com.luobd.server.cash.core.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.luobd.server.cash.core.dto.CashProjectPageDTO;
+import com.luobd.server.cash.core.dto.CashProjectTotalAmount;
 import com.luobd.server.cash.core.entity.CashProject;
 import com.luobd.server.cash.core.input.CreateProjectInput;
 import com.luobd.server.cash.core.input.ProjectPageInput;
 import com.luobd.server.cash.core.input.UpdateProjectInput;
+import com.luobd.server.cash.core.mapper.CashItemMapper;
 import com.luobd.server.cash.core.mapper.CashProjectMapper;
 import com.luobd.server.cash.core.service.ICashProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +21,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.transaction.annotation.Transactional;
 import com.luobd.server.common.entities.ResponseData;
 
@@ -35,6 +42,12 @@ public class CashProjectServiceImpl extends ServiceImpl<CashProjectMapper, CashP
 
   @Resource
   private CashProjectMapper baseMapper;
+
+
+  @Resource
+  private CashItemMapper cashItemMapper;
+
+
 
 
 @Override
@@ -101,9 +114,17 @@ public ResponseData<Boolean> delete(Long id) {
     }
 
     @Override
-    public ResponsePageData<CashProject> page(ProjectPageInput input) {
-        Page<CashProject> page = new Page<>(input.getPageIndex(),input.getPageSize());
-        Page<CashProject> projectPage = baseMapper.page(page, input);
+    public ResponsePageData<CashProjectPageDTO> page(ProjectPageInput input) {
+        Page<CashProjectPageDTO> page = new Page<>(input.getPageIndex(),input.getPageSize());
+        Page<CashProjectPageDTO> projectPage = baseMapper.page(page, input);
+        if(CollUtil.isNotEmpty(projectPage.getRecords())) {
+            List<Long> ids = projectPage.getRecords().stream().map(CashProjectPageDTO::getId).collect(Collectors.toList());
+            List<CashProjectTotalAmount> amounts = cashItemMapper.totalAmount(ids);
+            projectPage.getRecords().forEach(item -> {
+                Optional<CashProjectTotalAmount> first = amounts.stream().filter(amount -> amount.getProjectId().equals(item.getId())).findFirst();
+                first.ifPresent(amount -> item.setTotalAmount(amount.getTotalAmount()));
+            });
+        }
         return ResponsePageData.success(projectPage.getRecords(),projectPage.getTotal());
     }
 

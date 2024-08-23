@@ -1,10 +1,13 @@
 package com.luobd.server.cash.core.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.luobd.server.cash.core.dto.CashProjectTotalAmount;
 import com.luobd.server.cash.core.entity.CashItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.luobd.server.cash.core.input.CashItemPageInput;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -21,5 +24,7 @@ public interface CashItemMapper extends BaseMapper<CashItem> {
     Page<CashItem> page(Page<CashItem> page, @Param("input") CashItemPageInput input);
 
 
+
+    List<CashProjectTotalAmount> totalAmount(@Param("ids") List<Long> ids);
 
 }

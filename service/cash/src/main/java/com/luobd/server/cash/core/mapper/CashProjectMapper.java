@@ -1,6 +1,7 @@
 package com.luobd.server.cash.core.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.luobd.server.cash.core.dto.CashProjectPageDTO;
 import com.luobd.server.cash.core.entity.CashProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.luobd.server.cash.core.input.ProjectPageInput;
@@ -17,7 +18,7 @@ import org.apache.ibatis.annotations.Param;
 public interface CashProjectMapper extends BaseMapper<CashProject> {
 
 
-    Page<CashProject> page(Page<CashProject> page,@Param("input") ProjectPageInput input);
+    Page<CashProjectPageDTO> page(Page<CashProjectPageDTO> page, @Param("input") ProjectPageInput input);
 
 
 }
