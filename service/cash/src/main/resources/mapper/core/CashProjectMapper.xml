@@ -11,7 +11,7 @@
             and projectDate >= #{input.startProjectDate}
         </if>
         <if test="input.endProjectDate != null">
-            and projectDate &lt;= #{input.startProjectDate}
+            and projectDate &lt;= #{input.endProjectDate}
         </if>
         order by  createTime desc
     </select>
