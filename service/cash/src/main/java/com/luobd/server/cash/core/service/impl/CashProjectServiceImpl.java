@@ -50,12 +50,12 @@ public ResponseData<Boolean> delete(Long id) {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseData<Boolean> batchDelete(List<Long> ids) {
-            final boolean remove = this.removeByIds(ids);
-            if(!remove) {
-            return ResponseData.error("删除失败");
-            }
-            return ResponseData.success(Boolean.TRUE);
-            }
+        final boolean remove = this.removeByIds(ids);
+        if(!remove) {
+        return ResponseData.error("删除失败");
+        }
+        return ResponseData.success(Boolean.TRUE);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
