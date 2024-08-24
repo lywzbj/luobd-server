@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ApiModel(description = "当前用户信息")
@@ -22,4 +24,11 @@ public class CurrentUserInfo {
 
     @ApiModelProperty(value = "真名")
     private String trueName;
+
+    @ApiModelProperty(value = "角色")
+    private List<Role> roles;
+
+
+
+
 }

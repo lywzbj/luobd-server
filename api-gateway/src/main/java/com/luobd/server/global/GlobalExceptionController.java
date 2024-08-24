@@ -1,7 +1,9 @@
 package com.luobd.server.global;
 
 import com.luobd.server.common.entities.ResponseData;
+import com.luobd.server.common.exception.NoPermissionException;
 import com.luobd.server.common.exception.TokenValidException;
+import com.luobd.server.common.exception.UnAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,7 +37,13 @@ public class GlobalExceptionController {
         }else if(e instanceof TokenValidException) {
             error.setCode(HttpStatus.UNAUTHORIZED.value());
             error.setMsg("Not Auth");
-        }else {
+        }else if (e instanceof UnAuthenticationException) {
+            error.setCode(HttpStatus.UNAUTHORIZED.value());
+            error.setMsg("Not Auth");
+        }else if(e instanceof NoPermissionException) {
+            error.setCode(HttpStatus.FORBIDDEN.value());
+            error.setMsg("没有访问权限");
+        } else {
             e.printStackTrace();
             error.setMsg(e.getMessage());
         }
