@@ -1,5 +1,6 @@
 package com.luobd.server.base.core.service;
 
+import com.luobd.server.base.core.dto.CoreCategoryDTO;
 import com.luobd.server.base.core.entity.CoreCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.luobd.server.base.core.input.CategoryPageInput;
@@ -37,7 +38,7 @@ public interface ICoreCategoryService extends IService<CoreCategory> {
   ResponseData<Boolean> update(UpdateCategoryInput input);
 
 
-  ResponsePageData<CoreCategory> page(CategoryPageInput input);
+  ResponsePageData<CoreCategoryDTO> page(CategoryPageInput input);
 
 
 

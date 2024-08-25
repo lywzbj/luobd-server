@@ -1,6 +1,6 @@
 package com.luobd.server.api.pc.base;
 
-import com.luobd.server.base.core.entity.CoreCategory;
+import com.luobd.server.base.core.dto.CoreCategoryDTO;
 import com.luobd.server.base.core.input.CategoryPageInput;
 import com.luobd.server.base.core.input.CategoryTreeNode;
 import com.luobd.server.base.core.input.CreateCategoryInput;
@@ -41,7 +41,7 @@ public class BaseCategoryController {
 
     @PostMapping(value = "/page")
     @ApiOperation(value = "分页查询")
-    public ResponsePageData<CoreCategory> page(@RequestBody @Valid CategoryPageInput input) {
+    public ResponsePageData<CoreCategoryDTO> page(@RequestBody @Valid CategoryPageInput input) {
         return coreCategoryService.page(input);
     }
 
@@ -52,6 +52,12 @@ public class BaseCategoryController {
         return coreCategoryService.getTree(type);
     }
 
+
+    @GetMapping(value = "/delete")
+    @ApiOperation(value = "删除分类")
+    public ResponseData<Boolean> delete(@RequestParam("id") Long id) {
+        return coreCategoryService.delete(id);
+    }
 
 
 

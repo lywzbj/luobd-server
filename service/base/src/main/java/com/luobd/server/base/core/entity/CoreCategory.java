@@ -1,6 +1,8 @@
 package com.luobd.server.base.core.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -31,10 +33,10 @@ public class CoreCategory implements Serializable {
 
     private Integer status;
 
-    @TableField("createTime")
+    @TableField(value = "createTime",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @TableField("updateTime")
+    @TableField(value = "updateTime",fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @TableLogic
@@ -51,10 +53,10 @@ public class CoreCategory implements Serializable {
     @TableField("categoryName")
     private String categoryName;
 
-    @TableField("createUserId")
+    @TableField(value = "createUserId",fill = FieldFill.INSERT)
     private Long createUserId;
 
-    @TableField("updateUserId")
+    @TableField(value = "updateUserId",fill = FieldFill.UPDATE)
     private Long updateUserId;
 
 

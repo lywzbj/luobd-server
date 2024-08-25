@@ -44,6 +44,7 @@ public class CreateCategoryInput implements BaseInput<CoreCategory> {
     @Override
     public CoreCategory toEntity() {
         CoreCategory coreCategory = new CoreCategory();
+        coreCategory.setParentId(this.getParentId());
         coreCategory.setId(SnowIdWorker.nextId());
         coreCategory.setCategoryName(this.getCategoryName());
         coreCategory.setRemark(this.getRemark());

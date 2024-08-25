@@ -3,7 +3,7 @@
 <mapper namespace="com.luobd.server.base.core.mapper.CoreCategoryMapper">
 
 
-    <select id="page" resultType="com.luobd.server.base.core.entity.CoreCategory">
+    <select id="page" resultType="com.luobd.server.base.core.dto.CoreCategoryDTO">
         select * from core_category where deleted = 0
         <if test="input.parentId != null">
             and parentId = #{input.parentId}

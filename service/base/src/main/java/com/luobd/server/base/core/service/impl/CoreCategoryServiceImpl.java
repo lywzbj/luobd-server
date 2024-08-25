@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.luobd.server.base.core.dto.CoreCategoryDTO;
 import com.luobd.server.base.core.entity.CoreCategory;
 import com.luobd.server.base.core.input.CategoryPageInput;
 import com.luobd.server.base.core.input.CategoryTreeNode;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -104,8 +106,22 @@ public ResponseData<Boolean> delete(Long id) {
     }
 
     @Override
-    public ResponsePageData<CoreCategory> page(CategoryPageInput input) {
-        Page<CoreCategory> page = baseMapper.page(new Page<>(input.getPageIndex(), input.getPageSize()), input);
+    public ResponsePageData<CoreCategoryDTO> page(CategoryPageInput input) {
+        Page<CoreCategoryDTO> page = baseMapper.page(new Page<>(input.getPageIndex(), input.getPageSize()), input);
+        if(CollUtil.isNotEmpty(page.getRecords())) {
+            List<Long> ids = page.getRecords().stream().filter(v -> v.getParentId() != null && v.getParentId() != 0L).map(CoreCategoryDTO::getParentId).distinct().collect(Collectors.toList());
+            if (CollUtil.isNotEmpty(ids)){
+                List<CoreCategory> parentList = this.listByIds(ids);
+                if(CollUtil.isNotEmpty(parentList)) {
+                    Map<Long,String> map = parentList.stream().collect(Collectors.toMap(CoreCategory::getId, CoreCategory::getCategoryName));
+                    page.getRecords().forEach(v -> {
+                        if(map.containsKey(v.getParentId())) {
+                            v.setParentName(map.get(v.getParentId()));
+                        }
+                    });
+                }
+            }
+        }
         return ResponsePageData.success(page.getRecords(),page.getTotal());
     }
 
