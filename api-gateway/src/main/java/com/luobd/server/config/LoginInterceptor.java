@@ -1,17 +1,15 @@
 package com.luobd.server.config;
 
-import com.google.common.collect.Lists;
+
 import com.luobd.server.common.entities.CurrentRequestHolder;
 import com.luobd.server.common.entities.CurrentUserInfo;
 import com.luobd.server.common.entities.ResponseData;
-import com.luobd.server.common.entities.Role;
 import com.luobd.server.common.utils.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,9 +48,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         try {
             CurrentUserInfo subject = jwtUtil.getTokenSubject(token);
-            if (subject.getUsername().equals("admin")) {
-                subject.setRoles(Lists.newArrayList(new Role(1L,"admin")));
-            }
             CurrentRequestHolder.set(subject);
         }catch (Exception e) {
             log.error("认证失败",e);

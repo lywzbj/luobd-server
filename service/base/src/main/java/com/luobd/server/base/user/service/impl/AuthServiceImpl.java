@@ -1,11 +1,15 @@
 package com.luobd.server.base.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.luobd.server.base.roles.service.ICoreUserRoleService;
 import com.luobd.server.base.user.entity.CoreAccount;
+import com.luobd.server.base.user.entity.CoreUserInfo;
 import com.luobd.server.base.user.service.IAuthService;
 import com.luobd.server.base.user.service.ICoreAccountService;
+import com.luobd.server.base.user.service.ICoreUserInfoService;
 import com.luobd.server.common.entities.CurrentUserInfo;
 import com.luobd.server.common.entities.ResponseData;
+import com.luobd.server.common.entities.Role;
 import com.luobd.server.common.utils.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -28,6 +32,16 @@ public class AuthServiceImpl implements IAuthService {
     private ICoreAccountService coreAccountService;
 
 
+    @Resource
+    private ICoreUserInfoService coreUserInfoService;
+
+
+
+    @Resource
+    private ICoreUserRoleService coreUserRoleService;
+
+
+
 
 
     @Override
@@ -46,18 +60,17 @@ public class AuthServiceImpl implements IAuthService {
 
         CoreAccount account = list.get(0);
 
+        CoreUserInfo info = coreUserInfoService.getById(account.getUserInfoId());
+        List<Role> roles = coreUserRoleService.getRolesByUserId(info.getId());
+
+
         CurrentUserInfo userInfo = new CurrentUserInfo();
         userInfo.setUsername(username);
+        userInfo.setTrueName(info.getTrueName());
+        userInfo.setRoles(roles);
         userInfo.setUserInfoId(account.getUserInfoId());
-        userInfo.setTrueName("张三");
         userInfo.setAccountId(account.getId());
         String token = jwtUtil.createToken(userInfo);
-
-
-
-
-
-
         return ResponseData.success(token);
     }
 }

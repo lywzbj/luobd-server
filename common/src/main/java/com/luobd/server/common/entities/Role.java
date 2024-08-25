@@ -16,6 +16,8 @@ public class Role {
 
 
 
+    private String key;
+
 
 
 }

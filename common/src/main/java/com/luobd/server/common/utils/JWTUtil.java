@@ -1,5 +1,6 @@
 package com.luobd.server.common.utils;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.luobd.server.common.entities.CurrentUserInfo;
 import com.luobd.server.common.exception.TokenValidException;
 import io.jsonwebtoken.*;
@@ -28,6 +29,10 @@ public class JWTUtil {
 
 
 
+    private static final String ROLE_KEY = "role_key";
+
+
+
     //@Value这个注解一定要引入spring-boot-starter-validation才能使用
     //@Value注解可以代替@Data和@ConfigurationProperties结合
     //这两个二者选一即可
@@ -45,7 +50,8 @@ public class JWTUtil {
         claims.put(USER_INFO_ID, userDetails.getUserInfoId());
         claims.put(TRUE_NAME, userDetails.getTrueName());
         claims.put(ACCOUNT_ID, userDetails.getAccountId());
-        claims.put(CLAIM_KEY_CREATED, LocalDateTime.now());
+        claims.put(CLAIM_KEY_CREATED, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy-MM-dd HH:mm:ss"));
+        claims.put(ROLE_KEY, userDetails.getRoles());
         return createToken(claims);
     }
     private String createToken(Map<String, Object> claims) {

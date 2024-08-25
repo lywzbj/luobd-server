@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luobd.server.base.roles.mapper.CoreUserRoleMapper">
+
+    <select id="page" resultType="com.luobd.server.base.roles.dto.UserRolePageDTO">
+        select * from core_user_role t1
+            left join core_user_info t2 on t1.userInfoId = t2.id
+            left join core_roles t3 on t1.roleId = t3.id
+            left join core_account t4 on t2.accountId = t4.id
+        where t1.deleted = 0
+        <if test="input.accountName != null and input.accountName != ''">
+            and t4.accountName like concat('%',#{input.accountName},'%')
+        </if>
+        <if test="input.roleId != null">
+            and t1.roleId = #{input.roleId}
+        </if>
+        <if test="input.trueName != null and input.trueName != ''">
+            and t2.trueName like concat('%',#{input.trueName},'%')
+        </if>
+        order by t1.createTime desc
+    </select>
+
+
+    <select id="getRolesByUserInfoId" resultType="com.luobd.server.common.entities.Role">
+        select t3.id,t3.roleKey as `key`,t3.roleName as name from core_user_role t1
+            left join core_roles t3 on t1.roleId = t3.id
+        where t1.userInfoId = #{userInfoId} and t1.deleted = 0
+    </select>
+
+
+</mapper>
