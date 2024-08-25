@@ -70,7 +70,7 @@ public class SwaggerConfig {
 
     // 配置全局token
     private List<ApiKey> security() {
-        return Lists.newArrayList(new ApiKey("LuobdAuth", "LuobdAuth", "header"));
+        return Lists.newArrayList(new ApiKey("Authorization", "Authorization", "header"));
     }
 
 
