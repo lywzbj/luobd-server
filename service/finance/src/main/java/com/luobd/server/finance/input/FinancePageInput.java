@@ -22,11 +22,11 @@ public class FinancePageInput extends PageInput {
     private LocalDate occurEndDate;
 
 
-    @ApiModelProperty(value = "发生时间 - 开始")
+    @ApiModelProperty(value = "发生时间 - 开始",hidden = true)
     private LocalDateTime occurStartTime;
 
 
-    @ApiModelProperty(value = "发生时间 - 结束")
+    @ApiModelProperty(value = "发生时间 - 结束",hidden = true)
     private LocalDateTime occurEndTime;
 
     public void setOccurStartDate(LocalDate occurStartDate) {

@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/finance")
+@RequestMapping(value = "/api/finance/item")
 @Api(tags = "财务 - 记录模块")
 public class FinanceRecordController {
 
