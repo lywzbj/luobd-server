@@ -11,4 +11,10 @@ swagger:
   enabled: true
 
 
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: /tmp/logs/
+
+
 
