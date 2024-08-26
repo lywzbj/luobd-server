@@ -9,6 +9,7 @@ import com.luobd.server.base.core.input.CreateCategoryInput;
 import com.luobd.server.base.core.input.UpdateCategoryInput;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.common.entities.SelectDTO;
 
 import java.util.List;
 
@@ -44,6 +45,8 @@ public interface ICoreCategoryService extends IService<CoreCategory> {
 
 
   ResponseData<List<CategoryTreeNode>> getTree(String type);
+
+
 
 
 

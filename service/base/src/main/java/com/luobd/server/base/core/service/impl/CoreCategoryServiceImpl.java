@@ -14,12 +14,16 @@ import com.luobd.server.base.core.mapper.CoreCategoryMapper;
 import com.luobd.server.base.core.service.ICoreCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.common.entities.SelectDTO;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;

@@ -2,6 +2,8 @@ package com.luobd.server.finance.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -32,10 +34,10 @@ public class FinanceItem implements Serializable {
 
     private Integer status;
 
-    @TableField("createTime")
+    @TableField(value = "createTime",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @TableField("updateTime")
+    @TableField(value = "updateTime",fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @TableLogic
@@ -55,10 +57,10 @@ public class FinanceItem implements Serializable {
 
     private BigDecimal amount;
 
-    @TableField("createUserId")
+    @TableField(value = "createUserId",fill = FieldFill.INSERT)
     private Long createUserId;
 
-    @TableField("updateUserId")
+    @TableField(value = "updateUserId",fill = FieldFill.UPDATE)
     private Long updateUserId;
 
 
