@@ -24,6 +24,7 @@
     <module>service</module>
     <module>mybatis-plus</module>
     <module>api-gateway</module>
+      <module>chat-glm</module>
   </modules>
 
   <properties>

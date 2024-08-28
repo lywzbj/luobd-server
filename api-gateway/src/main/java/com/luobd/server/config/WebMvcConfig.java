@@ -37,12 +37,17 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> patterns=new ArrayList<>();
         patterns.add("/api/auth/login");
+        patterns.add("/api/chatglm/**");
         patterns.add("/api/captcha/**");
         patterns.add("/doc.html");
+        patterns.add("/public/index.html");
         patterns.add("/swagger-resources/**");
         patterns.add("/**/*.css");
         patterns.add("/images/**");
         patterns.add("/**/*.js");
+        patterns.add("/favicon.ico");
+        patterns.add("/public/**");
+        patterns.add("/index.html");
         //注册拦截器类，添加黑名单(addPathPatterns("/**")),‘/*’只拦截一个层级，'/**'拦截全部
         // 和白名单(excludePathPatterns("List类型参数"))，将不必拦截的路径添加到List列表中
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(patterns);
@@ -57,7 +62,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
-
+        registry.addResourceHandler("/index.html").addResourceLocations("classpath:/public/");
         super.addResourceHandlers(registry);
 
     }
