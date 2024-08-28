@@ -53,10 +53,6 @@ public class CoreUserInfo implements Serializable {
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-    @TableField("userInfoId")
-    private Long userInfoId;
-
     @TableField("trueName")
     private String trueName;
 
