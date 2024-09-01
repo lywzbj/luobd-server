@@ -68,6 +68,23 @@ public class SwaggerConfig {
     }
 
 
+    @Bean
+    public Docket createRestApiNotify() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .groupName("第三方回调接口")
+                //是否开启 (true 开启  false隐藏。生产环境建议隐藏)
+                //.enable(false)
+                .select()
+                //扫描的路径包,设置basePackage会将包下的所有被@Api标记类的所有方法作为api
+                .apis(RequestHandlerSelectors.basePackage("com.luobd.server.api.notify"))
+                //指定路径处理PathSelectors.any()代表所有的路径
+                .paths(PathSelectors.any())
+                .build()
+                .securitySchemes(security());
+    }
+
+
     // 配置全局token
     private List<ApiKey> security() {
         return Lists.newArrayList(new ApiKey("Authorization", "Authorization", "header"));

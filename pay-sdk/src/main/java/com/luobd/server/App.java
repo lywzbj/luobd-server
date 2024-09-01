@@ -7,7 +7,6 @@ import com.luobd.server.pay.params.LantuQueryOrderRequest;
 import com.luobd.server.pay.params.LantuRefundOrderRequest;
 import com.luobd.server.pay.response.OrderQueryResponse;
 import com.luobd.server.pay.response.PayResponse;
-import com.luobd.server.pay.response.RefundOrderResponse;
 import com.luobd.server.pay.services.NativePayment;
 
 import okhttp3.OkHttpClient;
@@ -37,22 +36,22 @@ public class App
         NativePayment nativePayment = build.create(NativePayment.class);
 
 
-//        LantuPostDataRequest request = LantuPostDataRequest.builder()
-//                .mch_id("1684459485")
-//                .out_trade_no("Luobd784514134ds")
-//                .total_fee("0.01")
-//                .body("QQ公仔")
-//                .timestamp(String.valueOf(System.currentTimeMillis() / 1000))
-//                .notify_url("https://www.luobd.top").build();
-//        Call<PayResponse> call = nativePayment.prePay(request.getMch_id(),
-//                request.getOut_trade_no(),
-//                request.getTotal_fee(),
-//                request.getBody(),
-//                request.getNotify_url(),
-//                request.getTimestamp(),
-//                request.sign("6033a1c0644e93a82666719df09b4029"));
-//        PayResponse execute = call.execute().body();
-//        System.out.println(JSONObject.toJSONString(execute));
+        LantuPostDataRequest request = LantuPostDataRequest.builder()
+                .mch_id("1684459485")
+                .out_trade_no("Luobd1234511")
+                .total_fee("0.01")
+                .body("QQ公仔")
+                .timestamp(String.valueOf(System.currentTimeMillis() / 1000))
+                .notify_url("https://api.luobd.top/notify/lantu/payed").build();
+        Call<PayResponse> call = nativePayment.prePay(request.getMch_id(),
+                request.getOut_trade_no(),
+                request.getTotal_fee(),
+                request.getBody(),
+                request.getNotify_url(),
+                request.getTimestamp(),
+                request.sign("6033a1c0644e93a82666719df09b4029"));
+        PayResponse execute = call.execute().body();
+        System.out.println(JSONObject.toJSONString(execute));
 
 //
 //        LantuQueryOrderRequest orderRequest = new LantuQueryOrderRequest();
@@ -72,24 +71,24 @@ public class App
 //        System.out.println(JSONObject.toJSONString(execute1));
 
 
-        LantuRefundOrderRequest refundOrderRequest = new LantuRefundOrderRequest();
-        refundOrderRequest.setMch_id("1684459485");
-        refundOrderRequest.setOut_trade_no("Luobd784514");
-        refundOrderRequest.setOut_refund_no("LuobdRefund784514");
-        refundOrderRequest.setRefund_fee("0.01");
-        refundOrderRequest.setTimestamp(String.valueOf(System.currentTimeMillis() / 1000));
-        refundOrderRequest.setSign(refundOrderRequest.sign("6033a1c0644e93a82666719df09b4029"));
-
-
-        Call<RefundOrderResponse> refund = nativePayment.refund(refundOrderRequest.getMch_id(),
-                refundOrderRequest.getOut_trade_no(),
-                refundOrderRequest.getOut_refund_no(),
-                refundOrderRequest.getRefund_fee(),
-                refundOrderRequest.getTimestamp(),
-                refundOrderRequest.getSign());
-
-        RefundOrderResponse body = refund.execute().body();
-        System.out.println(JSONObject.toJSONString(body));
+//        LantuRefundOrderRequest refundOrderRequest = new LantuRefundOrderRequest();
+//        refundOrderRequest.setMch_id("1684459485");
+//        refundOrderRequest.setOut_trade_no("Luobd784514");
+//        refundOrderRequest.setOut_refund_no("LuobdRefund784514");
+//        refundOrderRequest.setRefund_fee("0.01");
+//        refundOrderRequest.setTimestamp(String.valueOf(System.currentTimeMillis() / 1000));
+//        refundOrderRequest.setSign(refundOrderRequest.sign("6033a1c0644e93a82666719df09b4029"));
+//
+//
+//        Call<RefundOrderResponse> refund = nativePayment.refund(refundOrderRequest.getMch_id(),
+//                refundOrderRequest.getOut_trade_no(),
+//                refundOrderRequest.getOut_refund_no(),
+//                refundOrderRequest.getRefund_fee(),
+//                refundOrderRequest.getTimestamp(),
+//                refundOrderRequest.getSign());
+//
+//        RefundOrderResponse body = refund.execute().body();
+//        System.out.println(JSONObject.toJSONString(body));
 
 
 

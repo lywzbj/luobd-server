@@ -43,6 +43,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         patterns.add("/public/index.html");
         patterns.add("/swagger-resources/**");
         patterns.add("/**/*.css");
+        patterns.add("/notify/**");
         patterns.add("/images/**");
         patterns.add("/**/*.js");
         patterns.add("/favicon.ico");
