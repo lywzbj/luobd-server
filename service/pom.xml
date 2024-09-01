@@ -16,6 +16,8 @@
         <module>base</module>
         <module>cash</module>
         <module>finance</module>
+        <module>chat-api</module>
+
     </modules>
 
     <properties>
