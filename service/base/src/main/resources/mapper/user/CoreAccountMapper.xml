@@ -17,6 +17,15 @@
             t1.createTime
         from core_account t1 inner join core_user_info t2 on t1.userInfoId = t2.id
         <where>
+        <if test="input.searchInfo != null and input.searchInfo !=''">
+            and (
+                t1.accountName like concat('%',#{input.searchInfo},'%') or
+                t2.trueName like concat('%',#{input.searchInfo},'%') or
+                t2.phoneNumber like concat('%',#{input.searchInfo},'%') or
+                t2.email like concat('%',#{input.searchInfo},'%')
+                )
+        </if>
+
         <if test="input.accountName != null and input.accountName != ''">
             and t1.accountName like concat('%',#{input.accountName},'%')
         </if>

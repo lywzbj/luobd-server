@@ -36,6 +36,14 @@ public class BaseAccountController {
     }
 
 
+
+    @GetMapping(value = "/deleteById")
+    @ApiOperation(value = "删除账户")
+    public ResponseData<Boolean> delete(@RequestParam(value = "id") Long id) {
+        return coreAccountService.delete(id);
+    }
+
+
     @GetMapping(value = "/sendCheckCodeEmail")
     @ApiOperation(value = "发送验证码")
     public ResponseData<Boolean> sendCheckCodeEmail(@RequestParam(value = "emailUser") String emailUser) {

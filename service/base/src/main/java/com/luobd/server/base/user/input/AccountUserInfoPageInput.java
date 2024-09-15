@@ -9,6 +9,10 @@ import lombok.EqualsAndHashCode;
 @Data
 public class AccountUserInfoPageInput extends PageInput {
 
+
+    @ApiModelProperty(value = "搜索信息")
+    private String searchInfo;
+
     @ApiModelProperty(value = "账号名称")
     private String accountName;
 

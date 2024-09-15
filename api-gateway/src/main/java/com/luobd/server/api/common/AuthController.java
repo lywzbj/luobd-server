@@ -34,6 +34,9 @@ public class AuthController {
     @PostMapping(value = "/login")
     @ApiOperation(value = "登录接口")
     public ResponseData<String> login(@RequestBody @Valid LoginInput input) {
+        if(!authService.checkCaptcha(input.getCaptchaId(),input.getCaptcha())){
+            return ResponseData.error("验证码错误");
+        }
         return authService.auth(input.getUsername(),input.getPassword());
     }
 
@@ -54,6 +57,16 @@ class LoginInput {
     @ApiModelProperty(value = "密码  MD5加密字符串",required = true)
     @NotBlank(message = "请输入密码")
     private String password;
+
+
+    @ApiModelProperty(value = "验证码",required = true)
+    @NotBlank(message = "请输入验证码")
+    private String captcha;
+
+    @ApiModelProperty(value = "验证码id",required = true)
+    @NotBlank(message = "请输入验证码id")
+    private String captchaId;
+
 
 }
 

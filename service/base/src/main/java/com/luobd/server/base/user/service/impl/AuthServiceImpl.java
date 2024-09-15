@@ -1,6 +1,7 @@
 package com.luobd.server.base.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.collect.Maps;
 import com.luobd.server.base.roles.service.ICoreUserRoleService;
 import com.luobd.server.base.user.entity.CoreAccount;
 import com.luobd.server.base.user.entity.CoreUserInfo;
@@ -10,6 +11,7 @@ import com.luobd.server.base.user.service.ICoreUserInfoService;
 import com.luobd.server.common.entities.CurrentUserInfo;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.Role;
+import com.luobd.server.common.entities.captcha.Base64Captcha;
 import com.luobd.server.common.utils.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -41,11 +44,15 @@ public class AuthServiceImpl implements IAuthService {
     private ICoreUserRoleService coreUserRoleService;
 
 
-
+    private static Map<String,String> captchaMap = Maps.newConcurrentMap();
 
 
     @Override
     public ResponseData<String> auth(String username, String password) {
+
+
+
+
 
         QueryWrapper<CoreAccount> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("accountName",username);
@@ -72,5 +79,24 @@ public class AuthServiceImpl implements IAuthService {
         userInfo.setAccountId(account.getId());
         String token = jwtUtil.createToken(userInfo);
         return ResponseData.success(token);
+    }
+
+    @Override
+    public ResponseData<Base64Captcha> getCaptchaBase64() {
+        Base64Captcha captcha = Base64Captcha.of();
+        captchaMap.put(captcha.getId(), captcha.getCode());
+        return ResponseData.success(captcha);
+    }
+
+
+    public boolean checkCaptcha(String id, String captcha) {
+        if(captchaMap.containsKey(id)){
+            String code = captchaMap.get(id);
+            captchaMap.remove(id);
+            if(code.equals(captcha)){
+                return true;
+            }
+        }
+        return false;
     }
 }
