@@ -15,7 +15,7 @@
             t2.phoneNumber,
             t1.remark,
             t1.createTime
-        from core_account t1 inner join core_user_info t2 on t1.createUserId = t2.createUserId
+        from core_account t1 inner join core_user_info t2 on t1.userInfoId = t2.id
         <where>
         <if test="input.accountName != null and input.accountName != ''">
             and t1.accountName like concat('%',#{input.accountName},'%')

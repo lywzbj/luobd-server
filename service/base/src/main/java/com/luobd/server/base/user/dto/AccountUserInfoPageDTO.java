@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @ApiModel(description = "账号用户信息分页查询结果")
 @Data
 public class AccountUserInfoPageDTO {
@@ -31,6 +33,6 @@ public class AccountUserInfoPageDTO {
     private String remark;
 
     @ApiModelProperty(value = "创建时间")
-    private String createTime;
+    private LocalDateTime createTime;
 
 }

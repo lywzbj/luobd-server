@@ -20,6 +20,11 @@ public class CreateAccountInput {
     @NotBlank(message = "密码不能为空")
     private String password;
 
+
+    @ApiModelProperty(value = "手机号码")
+    private String phoneNumber;
+
+
     @ApiModelProperty(value = "备注")
     private String remark;
 

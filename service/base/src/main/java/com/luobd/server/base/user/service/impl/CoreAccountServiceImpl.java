@@ -106,6 +106,7 @@ public class CoreAccountServiceImpl extends ServiceImpl<CoreAccountMapper, CoreA
 
         CoreUserInfo coreUserInfo = new CoreUserInfo();
         coreUserInfo.setId(userInfoId);
+        coreUserInfo.setPhoneNumber(entity.getPhoneNumber());
         coreUserInfo.setTrueName(entity.getAccountName());
         coreUserInfo.setEmail(entity.getEmail());
         coreUserInfo.setAccountId(accountId);
