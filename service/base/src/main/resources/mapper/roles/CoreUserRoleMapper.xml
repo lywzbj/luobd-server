@@ -4,27 +4,27 @@
 
     <select id="page" resultType="com.luobd.server.base.roles.dto.UserRolePageDTO">
         select * from core_user_role t1
-            left join core_user_info t2 on t1.userInfoId = t2.id
+            left join core_account t2 on t1.accountId = t2.id
             left join core_roles t3 on t1.roleId = t3.id
-            left join core_account t4 on t2.accountId = t4.id
+            left join core_user_info t4 on t2.userInfoId = t4.id
         where t1.deleted = 0
         <if test="input.accountName != null and input.accountName != ''">
-            and t4.accountName like concat('%',#{input.accountName},'%')
+            and t2.accountName like concat('%',#{input.accountName},'%')
         </if>
         <if test="input.roleId != null">
             and t1.roleId = #{input.roleId}
         </if>
         <if test="input.trueName != null and input.trueName != ''">
-            and t2.trueName like concat('%',#{input.trueName},'%')
+            and t4.trueName like concat('%',#{input.trueName},'%')
         </if>
         order by t1.createTime desc
     </select>
 
 
-    <select id="getRolesByUserInfoId" resultType="com.luobd.server.common.entities.Role">
+    <select id="getRolesByAccountId" resultType="com.luobd.server.common.entities.Role">
         select t3.id,t3.roleKey as `key`,t3.roleName as name from core_user_role t1
             left join core_roles t3 on t1.roleId = t3.id
-        where t1.userInfoId = #{userInfoId} and t1.deleted = 0
+        where t1.accountId = #{accountId} and t1.deleted = 0
     </select>
 
 

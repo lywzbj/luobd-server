@@ -24,7 +24,7 @@ public interface CoreUserRoleMapper extends BaseMapper<CoreUserRole> {
     Page<UserRolePageDTO> page(Page<UserRolePageDTO> page, @Param("input") UserRolePageInput input);
 
 
-    List<Role> getRolesByUserInfoId(@Param("userInfoId") Long userInfoId);
+    List<Role> getRolesByAccountId(@Param("accountId") Long accountId);
 
 
 }

@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.luobd.server.base.user.mapper.CoreAccountMapper">
 
+
+    <select id="page" resultType="com.luobd.server.base.user.dto.AccountUserInfoPageDTO"
+            parameterType="com.luobd.server.base.user.input.AccountUserInfoPageInput">
+
+        select
+            t1.id,
+            t1.userInfoId,
+            t1.accountName,
+            t2.trueName,
+            t2.email,
+            t2.phoneNumber,
+            t1.remark,
+            t1.createTime
+        from core_account t1 inner join core_user_info t2 on t1.createUserId = t2.createUserId
+        <where>
+        <if test="input.accountName != null and input.accountName != ''">
+            and t1.accountName like concat('%',#{input.accountName},'%')
+        </if>
+        <if test="input.trueName != null and input.trueName != ''">
+            and t2.trueName like concat('%',#{input.trueName},'%')
+        </if>
+        <if test="input.phoneNumber != null and input.phoneNumber != ''">
+            and t2.phoneNumber like concat('%',#{input.phoneNumber},'%')
+        </if>
+        </where>
+
+
+    </select>
 </mapper>

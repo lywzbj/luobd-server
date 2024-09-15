@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 public class AddUserRoleInput {
 
 
-    @ApiModelProperty(value = "用户ID",required = true)
-    @NotNull(message = "请指定用户ID")
-    private Long userInfoId;
+    @ApiModelProperty(value = "账户id",required = true)
+    @NotNull(message = "请指定账户id")
+    private Long accountId;
 
     @ApiModelProperty(value = "角色ID",required = true)
     @NotNull(message = "请指定角色ID")

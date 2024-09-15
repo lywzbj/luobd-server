@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.luobd.server.base.roles.dto.UserRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreUserRole;
 import com.luobd.server.base.roles.input.AddUserRoleInput;
+import com.luobd.server.base.roles.input.SetAccountRolesInput;
 import com.luobd.server.base.roles.input.UserRolePageInput;
 import com.luobd.server.base.roles.mapper.CoreUserRoleMapper;
 import com.luobd.server.base.roles.service.ICoreUserRoleService;
@@ -12,10 +13,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.luobd.server.common.entities.ResponsePageData;
 import com.luobd.server.common.entities.Role;
 import com.luobd.server.common.utils.SnowIdWorker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.transaction.annotation.Transactional;
 import com.luobd.server.common.entities.ResponseData;
 
@@ -29,6 +33,7 @@ import com.luobd.server.common.entities.ResponseData;
  */
 @Service
 @Primary
+@Slf4j
 public class CoreUserRoleServiceImpl extends ServiceImpl<CoreUserRoleMapper, CoreUserRole> implements ICoreUserRoleService {
 
 
@@ -60,14 +65,15 @@ public class CoreUserRoleServiceImpl extends ServiceImpl<CoreUserRoleMapper, Cor
     @Transactional(rollbackFor = Exception.class)
     public ResponseData<Boolean> add(AddUserRoleInput input) {
         QueryWrapper<CoreUserRole> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userInfoId",input.getUserInfoId());
+        queryWrapper.eq("accountId",input.getAccountId());
         queryWrapper.eq("roleId",input.getRoleId());
         if(this.count(queryWrapper) > 0) {
-            return ResponseData.error("该用户已拥有该角色");
+            log.info("账户:{}已存在角色:{},直接返回",input.getAccountId(),input.getRoleId());
+            return ResponseData.success(Boolean.TRUE);
         }
         CoreUserRole coreUserRole = new CoreUserRole();
         coreUserRole.setId(SnowIdWorker.nextId());
-        coreUserRole.setUserInfoId(input.getUserInfoId());
+        coreUserRole.setAccountId(input.getAccountId());
         coreUserRole.setRoleId(input.getRoleId());
         if(this.save(coreUserRole)) {
             return ResponseData.success(Boolean.TRUE);
@@ -82,8 +88,24 @@ public class CoreUserRoleServiceImpl extends ServiceImpl<CoreUserRoleMapper, Cor
     }
 
     @Override
-    public List<Role> getRolesByUserId(Long userId) {
-        return baseMapper.getRolesByUserInfoId(userId);
+    public List<Role> getRolesByAccountId(Long accountId) {
+        return baseMapper.getRolesByAccountId(accountId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseData<Boolean> setAccountRoles(SetAccountRolesInput entity) {
+        this.remove(new QueryWrapper<CoreUserRole>().eq("accountId",entity.getAccountId()));
+        List<CoreUserRole> coreUserRoles = entity.getRoleIds().stream().map(roleId -> {
+            CoreUserRole coreUserRole = new CoreUserRole();
+            coreUserRole.setId(SnowIdWorker.nextId());
+            coreUserRole.setId(SnowIdWorker.nextId());
+            coreUserRole.setAccountId(entity.getAccountId());
+            coreUserRole.setRoleId(roleId);
+            return coreUserRole;
+        }).collect(Collectors.toList());
+        this.saveBatch(coreUserRoles);
+        return ResponseData.success(Boolean.TRUE);
     }
 
 

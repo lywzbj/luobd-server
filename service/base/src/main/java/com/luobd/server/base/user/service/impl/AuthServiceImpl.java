@@ -56,12 +56,12 @@ public class AuthServiceImpl implements IAuthService {
         if(list.size() > 1) {
             return ResponseData.error("数据异常,请联系管理员");
         }
-
-
         CoreAccount account = list.get(0);
-
+        if(!account.getPassword().equals(password)) {
+            return ResponseData.error("用户不存在或者密码不正确");
+        }
         CoreUserInfo info = coreUserInfoService.getById(account.getUserInfoId());
-        List<Role> roles = coreUserRoleService.getRolesByUserId(info.getId());
+        List<Role> roles = coreUserRoleService.getRolesByAccountId(account.getId());
 
 
         CurrentUserInfo userInfo = new CurrentUserInfo();

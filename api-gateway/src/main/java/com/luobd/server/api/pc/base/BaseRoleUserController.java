@@ -2,6 +2,7 @@ package com.luobd.server.api.pc.base;
 
 import com.luobd.server.base.roles.dto.UserRolePageDTO;
 import com.luobd.server.base.roles.input.AddUserRoleInput;
+import com.luobd.server.base.roles.input.SetAccountRolesInput;
 import com.luobd.server.base.roles.input.UserRolePageInput;
 import com.luobd.server.base.roles.service.ICoreUserRoleService;
 import com.luobd.server.common.entities.ResponseData;
@@ -43,5 +44,10 @@ public class BaseRoleUserController {
         return coreUserRoleService.page(input);
     }
 
+    @PostMapping(value = "/setAccountRoles")
+    @ApiOperation(value = "设置账号角色")
+    public ResponseData<Boolean> setAccountRoles(@RequestBody @Valid SetAccountRolesInput input) {
+        return coreUserRoleService.setAccountRoles(input);
+    }
 
 }

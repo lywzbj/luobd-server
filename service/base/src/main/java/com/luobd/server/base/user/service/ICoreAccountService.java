@@ -1,8 +1,15 @@
 package com.luobd.server.base.user.service;
 
+import com.luobd.server.base.user.dto.AccountUserInfoPageDTO;
 import com.luobd.server.base.user.entity.CoreAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.luobd.server.base.user.input.AccountUserInfoPageInput;
+import com.luobd.server.base.user.input.CreateAccountInput;
+import com.luobd.server.base.user.input.ResetPasswordInput;
 import com.luobd.server.common.entities.ResponseData;
+import com.luobd.server.common.entities.ResponsePageData;
+
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -24,11 +31,15 @@ public interface ICoreAccountService extends IService<CoreAccount> {
 
 
 
+  ResponseData<Boolean> create(CreateAccountInput entity);
 
 
 
+  ResponseData<Boolean> resetPassword(ResetPasswordInput entity);
 
 
+
+  ResponsePageData<AccountUserInfoPageDTO> page(AccountUserInfoPageInput input);
 
 
 

@@ -42,8 +42,8 @@ public class CoreUserRole implements Serializable {
     @TableLogic
     private Boolean deleted;
 
-    @TableField("userInfoId")
-    private Long userInfoId;
+    @TableField("accountId")
+    private Long accountId;
 
     @TableField("roleId")
     private Long roleId;
