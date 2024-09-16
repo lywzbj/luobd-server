@@ -20,3 +20,12 @@ spring:
       "mail.smtp.auth": true
       "mail.smtp.starttls.enable": true
       "mail.smtp.starttls.required": true
+chatglm:
+  sdk:
+    config:
+      # 状态；true = 开启、false 关闭
+      enable: true
+      # 官网地址
+      api-host: https://open.bigmodel.cn/
+      # 官网申请 https://open.bigmodel.cn/usercenter/apikeys
+      api-secret-key: 1ed747a5e448e91fa29e717c187a982f.pqlgo9cH00crpjWk
