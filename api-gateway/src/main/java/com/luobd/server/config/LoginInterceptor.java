@@ -9,11 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 
 @Slf4j
@@ -34,7 +36,15 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.name())) {
-            return true;
+            return HandlerInterceptor.super.preHandle(request, response, handler);
+        }
+        if(handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            Method method = handlerMethod.getMethod();
+            IgnoreAuth ignoreAuth = method.getAnnotation(IgnoreAuth.class);
+            if(ignoreAuth != null) {
+                return HandlerInterceptor.super.preHandle(request, response, handler);
+            }
         }
         String token = request.getHeader("Authorization");
         if(token == null || token.isEmpty()) {

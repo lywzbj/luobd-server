@@ -35,6 +35,10 @@ public interface ICoreRolesService extends IService<CoreRoles> {
 
 
 
+  Long getDefaultRoleId(String key);
+
+
+
 
 
 

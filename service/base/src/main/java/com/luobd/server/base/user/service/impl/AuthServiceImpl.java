@@ -64,7 +64,7 @@ public class AuthServiceImpl implements IAuthService {
             return ResponseData.error("数据异常,请联系管理员");
         }
         CoreAccount account = list.get(0);
-        if(!account.getPassword().equals(password)) {
+        if(!account.getPassword().equalsIgnoreCase(password)) {
             return ResponseData.error("用户不存在或者密码不正确");
         }
         CoreUserInfo info = coreUserInfoService.getById(account.getUserInfoId());

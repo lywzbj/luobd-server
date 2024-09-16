@@ -5,6 +5,7 @@ import com.luobd.server.base.user.entity.CoreAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.luobd.server.base.user.input.AccountUserInfoPageInput;
 import com.luobd.server.base.user.input.CreateAccountInput;
+import com.luobd.server.base.user.input.RegisterAccountInput;
 import com.luobd.server.base.user.input.ResetPasswordInput;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
@@ -40,6 +41,10 @@ public interface ICoreAccountService extends IService<CoreAccount> {
 
 
   ResponsePageData<AccountUserInfoPageDTO> page(AccountUserInfoPageInput input);
+
+
+
+  ResponseData<Boolean> register(RegisterAccountInput input);
 
 
 

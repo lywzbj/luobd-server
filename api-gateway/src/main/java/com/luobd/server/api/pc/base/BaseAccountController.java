@@ -4,11 +4,13 @@ package com.luobd.server.api.pc.base;
 import com.luobd.server.base.user.dto.AccountUserInfoPageDTO;
 import com.luobd.server.base.user.input.AccountUserInfoPageInput;
 import com.luobd.server.base.user.input.CreateAccountInput;
+import com.luobd.server.base.user.input.RegisterAccountInput;
 import com.luobd.server.base.user.input.ResetPasswordInput;
 import com.luobd.server.base.user.service.ICoreAccountService;
 import com.luobd.server.base.user.service.IEmailSendService;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.config.IgnoreAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,14 @@ public class BaseAccountController {
     }
 
 
+    @PostMapping(value = "/register")
+    @ApiOperation(value = "前台注册用户")
+    @IgnoreAuth
+    public ResponseData<Boolean> register(@RequestBody @Valid RegisterAccountInput input) {
+        return coreAccountService.register(input);
+    }
+
+
 
     @GetMapping(value = "/deleteById")
     @ApiOperation(value = "删除账户")
@@ -46,6 +56,7 @@ public class BaseAccountController {
 
     @GetMapping(value = "/sendCheckCodeEmail")
     @ApiOperation(value = "发送验证码")
+    @IgnoreAuth
     public ResponseData<Boolean> sendCheckCodeEmail(@RequestParam(value = "emailUser") String emailUser) {
         return emailSendService.sendCheckCodeEmail(emailUser);
     }

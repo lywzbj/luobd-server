@@ -1,34 +1,28 @@
 package com.luobd.server.base.user.service.impl;
 
-import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.luobd.server.base.roles.service.ICoreRolesService;
 import com.luobd.server.base.user.dto.AccountUserInfoPageDTO;
 import com.luobd.server.base.user.entity.CoreAccount;
 import com.luobd.server.base.user.entity.CoreUserInfo;
 import com.luobd.server.base.user.input.AccountUserInfoPageInput;
 import com.luobd.server.base.user.input.CreateAccountInput;
+import com.luobd.server.base.user.input.RegisterAccountInput;
 import com.luobd.server.base.user.input.ResetPasswordInput;
-import com.luobd.server.base.roles.input.SetAccountRolesInput;
 import com.luobd.server.base.user.mapper.CoreAccountMapper;
 import com.luobd.server.base.user.service.ICoreAccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.luobd.server.base.user.service.ICoreUserInfoService;
+import com.luobd.server.base.user.service.IEmailSendService;
+import com.luobd.server.common.constant.CommonConstant;
 import com.luobd.server.common.entities.ResponsePageData;
 import com.luobd.server.common.utils.SnowIdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,22 +41,20 @@ import com.luobd.server.common.entities.ResponseData;
 @Slf4j
 public class CoreAccountServiceImpl extends ServiceImpl<CoreAccountMapper, CoreAccount> implements ICoreAccountService {
 
-
   @Resource
   private CoreAccountMapper baseMapper;
-
-
-
-
-
-
 
   @Resource
   private ICoreUserInfoService coreUserInfoService;
 
 
   @Resource
-  private JavaMailSender javaMailSender;
+  private ICoreRolesService coreRolesService;
+
+
+
+  @Resource
+  private IEmailSendService emailSendService;
 
 
 
@@ -134,6 +126,27 @@ public class CoreAccountServiceImpl extends ServiceImpl<CoreAccountMapper, CoreA
             return ResponsePageData.success(page.getRecords(),page.getTotal());
         }
         return ResponsePageData.success(Collections.emptyList(),0);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseData<Boolean> register(RegisterAccountInput input) {
+        ResponseData<Boolean> responseData = emailSendService.checkCheckCode(input.getEmail(), input.getCheckCode());
+        if(!responseData.isSuccess()){
+            return responseData;
+        }
+        QueryWrapper<CoreUserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email",input.getEmail());
+        if(CollUtil.isNotEmpty(coreUserInfoService.list(queryWrapper))){
+            return ResponseData.error("邮箱已被注册");
+        }
+        CreateAccountInput createAccountInput = new CreateAccountInput();
+        createAccountInput.setAccountName(input.getAccountName());
+        createAccountInput.setPassword(input.getPassword());
+        createAccountInput.setRemark("PC页面注册");
+        createAccountInput.setEmail(input.getEmail());
+        createAccountInput.setRoleIds(Collections.singleton(coreRolesService.getDefaultRoleId(CommonConstant.DEFAULT_ROLE_USER)));
+       return  create(createAccountInput);
     }
 
 

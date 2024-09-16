@@ -48,5 +48,8 @@ public class ResponseData<T> {
     }
 
 
+    public boolean isSuccess() {
+        return code == 200;
+    }
 
 }
