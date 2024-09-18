@@ -3,6 +3,7 @@ package com.luobd.server.api.common;
 
 import com.luobd.server.base.user.service.IAuthService;
 import com.luobd.server.common.entities.ResponseData;
+import com.luobd.server.config.IgnoreAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,10 +34,11 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "登录接口")
+    @IgnoreAuth
     public ResponseData<String> login(@RequestBody @Valid LoginInput input) {
-        if(!authService.checkCaptcha(input.getCaptchaId(),input.getCaptcha())){
-            return ResponseData.error("验证码错误");
-        }
+//        if(!authService.checkCaptcha(input.getCaptchaId(),input.getCaptcha())){
+//            return ResponseData.error("验证码错误");
+//        }
         return authService.auth(input.getUsername(),input.getPassword());
     }
 

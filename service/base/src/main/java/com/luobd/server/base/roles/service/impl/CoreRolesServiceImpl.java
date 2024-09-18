@@ -47,6 +47,7 @@ public class CoreRolesServiceImpl extends ServiceImpl<CoreRolesMapper, CoreRoles
 
 
      @PostConstruct
+     @Transactional
       public void initDefaultRoles() {
          log.info("初始化默认角色");
         QueryWrapper<CoreRoles> queryWrapper = new QueryWrapper<>();

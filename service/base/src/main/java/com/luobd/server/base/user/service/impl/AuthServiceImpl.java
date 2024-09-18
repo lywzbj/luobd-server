@@ -49,11 +49,6 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public ResponseData<String> auth(String username, String password) {
-
-
-
-
-
         QueryWrapper<CoreAccount> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("accountName",username);
         List<CoreAccount> list = coreAccountService.list(queryWrapper);

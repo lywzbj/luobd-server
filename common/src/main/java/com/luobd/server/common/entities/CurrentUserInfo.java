@@ -1,5 +1,6 @@
 package com.luobd.server.common.entities;
 
+import com.alibaba.fastjson.JSONArray;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -27,6 +28,12 @@ public class CurrentUserInfo {
 
     @ApiModelProperty(value = "角色")
     private List<Role> roles;
+
+
+    public String getRolesJson()
+    {
+        return JSONArray.toJSONString(roles);
+    }
 
 
 

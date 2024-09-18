@@ -1,7 +1,11 @@
 package com.luobd.server.common.utils;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.luobd.server.common.entities.CurrentUserInfo;
+import com.luobd.server.common.entities.Role;
 import com.luobd.server.common.exception.TokenValidException;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -51,7 +56,9 @@ public class JWTUtil {
         claims.put(TRUE_NAME, userDetails.getTrueName());
         claims.put(ACCOUNT_ID, userDetails.getAccountId());
         claims.put(CLAIM_KEY_CREATED, LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy-MM-dd HH:mm:ss"));
-        claims.put(ROLE_KEY, userDetails.getRoles());
+        if(CollUtil.isNotEmpty(userDetails.getRoles())) {
+            claims.put(ROLE_KEY, userDetails.getRolesJson());
+        }
         return createToken(claims);
     }
     private String createToken(Map<String, Object> claims) {
@@ -72,6 +79,12 @@ public class JWTUtil {
         info.setTrueName(claims.get(TRUE_NAME,String.class));
         info.setUserInfoId(claims.get(USER_INFO_ID,Long.class));
         info.setAccountId(claims.get(ACCOUNT_ID,Long.class));
+        String array = claims.get(ROLE_KEY, String.class);
+        if(StrUtil.isNotEmpty(array)) {
+            JSONArray jsonArray = JSONArray.parseArray(array);
+            info.setRoles(jsonArray.toJavaList(Role.class));
+        }
+
         return info;
     }
 

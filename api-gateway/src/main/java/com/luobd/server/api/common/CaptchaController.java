@@ -5,6 +5,7 @@ import com.luobd.server.base.user.service.IAuthService;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.captcha.Base64Captcha;
 import com.luobd.server.common.entities.captcha.CaptchaCheckInput;
+import com.luobd.server.config.IgnoreAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class CaptchaController {
 
     @GetMapping(value = "/getCaptchaBase64")
     @ApiOperation(value = "获取验证码")
+    @IgnoreAuth
     public ResponseData<Base64Captcha> getCaptchaBase64() {
         return authService.getCaptchaBase64();
     }

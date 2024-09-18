@@ -36,9 +36,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> patterns=new ArrayList<>();
-        patterns.add("/api/auth/login");
-        patterns.add("/api/chatglm/**");
-        patterns.add("/api/captcha/**");
         patterns.add("/doc.html");
         patterns.add("/public/index.html");
         patterns.add("/swagger-resources/**");

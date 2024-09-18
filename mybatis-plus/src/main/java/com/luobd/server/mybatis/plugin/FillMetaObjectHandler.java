@@ -16,7 +16,10 @@ public class FillMetaObjectHandler implements MetaObjectHandler {
         this.fillStrategy(metaObject,"createTime", LocalDateTime.now());
         this.fillStrategy(metaObject,"status", CommonConstant.STATUS_ENABLED);
         CurrentUserInfo userInfo = CurrentRequestHolder.get();
-        Long userInfoId = userInfo.getUserInfoId() == null ? 0L : userInfo.getUserInfoId();
+        Long userInfoId = 0L;
+        if(userInfo != null && userInfo.getUserInfoId() != null) {
+            userInfoId = userInfo.getUserInfoId();
+        }
         this.fillStrategy(metaObject,"createUserId",userInfoId);
 
     }
