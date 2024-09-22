@@ -1,7 +1,9 @@
 package com.luobd.server.api.pc.base;
 
+import com.luobd.server.base.roles.dto.CoreRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreRoles;
 import com.luobd.server.base.roles.input.CreateRoleInput;
+import com.luobd.server.base.roles.input.RolePageInput;
 import com.luobd.server.base.roles.service.ICoreRolesService;
 import com.luobd.server.common.entities.PageInput;
 import com.luobd.server.common.entities.ResponseData;
@@ -28,7 +30,7 @@ public class BaseRoleController {
     }
 
 
-    @GetMapping(value = "/delete")
+    @GetMapping(value = "/deleteById")
     @ApiOperation(value = "删除角色")
     public ResponseData<Boolean> delete(@RequestParam Long id) {
         return coreRolesService.delete(id);
@@ -37,7 +39,7 @@ public class BaseRoleController {
 
     @PostMapping(value = "/page")
     @ApiOperation(value = "分页查询")
-    public ResponsePageData<CoreRoles> page(@RequestBody @Valid PageInput input) {
+    public ResponsePageData<CoreRolePageDTO> page(@RequestBody @Valid RolePageInput input) {
         return coreRolesService.page(input);
     }
 

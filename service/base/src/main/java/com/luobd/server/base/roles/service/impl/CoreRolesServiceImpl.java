@@ -3,13 +3,14 @@ package com.luobd.server.base.roles.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.luobd.server.base.roles.dto.CoreRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreRoles;
 import com.luobd.server.base.roles.input.CreateRoleInput;
+import com.luobd.server.base.roles.input.RolePageInput;
 import com.luobd.server.base.roles.mapper.CoreRolesMapper;
 import com.luobd.server.base.roles.service.ICoreRolesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.luobd.server.common.constant.CommonConstant;
-import com.luobd.server.common.entities.PageInput;
 import com.luobd.server.common.entities.ResponsePageData;
 import com.luobd.server.common.utils.SnowIdWorker;
 import lombok.extern.slf4j.Slf4j;
@@ -104,10 +105,8 @@ public class CoreRolesServiceImpl extends ServiceImpl<CoreRolesMapper, CoreRoles
         }
 
     @Override
-    public ResponsePageData<CoreRoles> page(PageInput pageInput) {
-        QueryWrapper<CoreRoles> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("createTime");
-        Page<CoreRoles> page = this.page(new Page<>(pageInput.getPageIndex(), pageInput.getPageSize()), queryWrapper);
+    public ResponsePageData<CoreRolePageDTO> page(RolePageInput pageInput) {
+        Page<CoreRolePageDTO> page = this.baseMapper.page(new Page<>(pageInput.getPageIndex(), pageInput.getPageSize()), pageInput);
         return ResponsePageData.success(page.getRecords(),page.getTotal());
     }
 
@@ -122,6 +121,7 @@ public class CoreRolesServiceImpl extends ServiceImpl<CoreRolesMapper, CoreRoles
         coreRoles.setId(SnowIdWorker.nextId());
         coreRoles.setRoleKey(input.getRoleKey());
         coreRoles.setRoleName(input.getRoleName());
+        coreRoles.setDefaulted(false);
         if (this.save(coreRoles)) {
             return ResponseData.success(coreRoles.getId());
         }

@@ -1,8 +1,10 @@
 package com.luobd.server.base.roles.service;
 
+import com.luobd.server.base.roles.dto.CoreRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreRoles;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.luobd.server.base.roles.input.CreateRoleInput;
+import com.luobd.server.base.roles.input.RolePageInput;
 import com.luobd.server.common.entities.PageInput;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
@@ -28,7 +30,7 @@ public interface ICoreRolesService extends IService<CoreRoles> {
 
 
 
-  ResponsePageData<CoreRoles> page(PageInput pageInput);
+  ResponsePageData<CoreRolePageDTO> page(RolePageInput pageInput);
 
 
   ResponseData<Long> create(CreateRoleInput input);

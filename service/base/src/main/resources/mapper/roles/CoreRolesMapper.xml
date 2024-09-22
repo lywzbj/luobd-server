@@ -2,4 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.luobd.server.base.roles.mapper.CoreRolesMapper">
 
+
+    <select id="page" resultType="com.luobd.server.base.roles.dto.CoreRolePageDTO">
+        select t.id, t.roleName, t.roleKey, t.defaulted, t.remark, t.createTime,
+               (select count(1) from core_user_role ur where ur.roleId = t.id) userCount
+        from core_roles t
+        where t.deleted = 0
+        <if test="input.searchInfo != null and input.searchInfo != ''">
+            and (t.roleName like concat('%',#{input.searchInfo},'%') or t.roleKey like concat('%',#{input.searchInfo},'%'))
+        </if>
+        <if test="input.defaulted != null">
+            and t.defaulted = #{input.defaulted}
+        </if>
+        order by t.createTime desc
+    </select>
+
+
 </mapper>
