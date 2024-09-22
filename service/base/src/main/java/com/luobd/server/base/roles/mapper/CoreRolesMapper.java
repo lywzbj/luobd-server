@@ -5,7 +5,6 @@ import com.luobd.server.base.roles.dto.CoreRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreRoles;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.luobd.server.base.roles.input.RolePageInput;
-import com.luobd.server.common.entities.PageInput;
 import org.apache.ibatis.annotations.Param;
 
 /**
