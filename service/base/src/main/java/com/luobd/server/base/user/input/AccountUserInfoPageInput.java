@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Set;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AccountUserInfoPageInput extends PageInput {
@@ -21,5 +23,13 @@ public class AccountUserInfoPageInput extends PageInput {
 
     @ApiModelProperty(value = "手机号码")
     private String phoneNumber;
+
+    @ApiModelProperty(value = "角色ID")
+    private Long roleId;
+
+
+
+
+
 
 }

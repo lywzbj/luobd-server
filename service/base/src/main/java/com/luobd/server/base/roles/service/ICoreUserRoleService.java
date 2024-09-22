@@ -4,6 +4,7 @@ import com.luobd.server.base.roles.dto.UserRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreUserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.luobd.server.base.roles.input.AddUserRoleInput;
+import com.luobd.server.base.roles.input.SetRoleAccountsInput;
 import com.luobd.server.base.roles.input.UserRolePageInput;
 import com.luobd.server.base.roles.input.SetAccountRolesInput;
 import com.luobd.server.common.entities.ResponseData;
@@ -43,6 +44,8 @@ public interface ICoreUserRoleService extends IService<CoreUserRole> {
   ResponseData<Boolean> setAccountRoles(SetAccountRolesInput entity);
 
 
+
+  ResponseData<Boolean> setRoleAccounts(SetRoleAccountsInput entity);
 
 
 

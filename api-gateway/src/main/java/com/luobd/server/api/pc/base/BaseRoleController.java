@@ -1,13 +1,13 @@
 package com.luobd.server.api.pc.base;
 
 import com.luobd.server.base.roles.dto.CoreRolePageDTO;
-import com.luobd.server.base.roles.entity.CoreRoles;
 import com.luobd.server.base.roles.input.CreateRoleInput;
 import com.luobd.server.base.roles.input.RolePageInput;
 import com.luobd.server.base.roles.service.ICoreRolesService;
-import com.luobd.server.common.entities.PageInput;
+import com.luobd.server.common.constant.CommonConstant;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.common.permission.AccessRoles;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +25,7 @@ public class BaseRoleController {
 
     @PostMapping(value = "/create")
     @ApiOperation(value = "创建角色")
+    @AccessRoles(values = {CommonConstant.DEFAULT_ROLE_ADMINISTRATOR})
     public ResponseData<Long> create(@RequestBody @Valid CreateRoleInput input) {
         return coreRolesService.create(input);
     }
@@ -32,6 +33,7 @@ public class BaseRoleController {
 
     @GetMapping(value = "/deleteById")
     @ApiOperation(value = "删除角色")
+    @AccessRoles(values = {CommonConstant.DEFAULT_ROLE_ADMINISTRATOR})
     public ResponseData<Boolean> delete(@RequestParam Long id) {
         return coreRolesService.delete(id);
     }

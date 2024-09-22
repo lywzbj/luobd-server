@@ -3,10 +3,13 @@ package com.luobd.server.api.pc.base;
 import com.luobd.server.base.roles.dto.UserRolePageDTO;
 import com.luobd.server.base.roles.input.AddUserRoleInput;
 import com.luobd.server.base.roles.input.SetAccountRolesInput;
+import com.luobd.server.base.roles.input.SetRoleAccountsInput;
 import com.luobd.server.base.roles.input.UserRolePageInput;
 import com.luobd.server.base.roles.service.ICoreUserRoleService;
+import com.luobd.server.common.constant.CommonConstant;
 import com.luobd.server.common.entities.ResponseData;
 import com.luobd.server.common.entities.ResponsePageData;
+import com.luobd.server.common.permission.AccessRoles;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +22,12 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/core/roleUsers")
 public class BaseRoleUserController {
 
-
     @Resource
     private ICoreUserRoleService coreUserRoleService;
 
-
     @PostMapping(value = "/add")
     @ApiOperation(value = "添加角色用户")
+    @AccessRoles(values = {CommonConstant.DEFAULT_ROLE_ADMINISTRATOR})
     public ResponseData<Boolean> add(@RequestBody @Valid AddUserRoleInput input) {
         return coreUserRoleService.add(input);
     }
@@ -33,6 +35,7 @@ public class BaseRoleUserController {
 
     @GetMapping(value = "/delete")
     @ApiOperation(value = "删除角色用户")
+    @AccessRoles(values = {CommonConstant.DEFAULT_ROLE_ADMINISTRATOR})
     public ResponseData<Boolean> delete(@RequestParam Long id) {
         return coreUserRoleService.delete(id);
     }
@@ -46,8 +49,19 @@ public class BaseRoleUserController {
 
     @PostMapping(value = "/setAccountRoles")
     @ApiOperation(value = "设置账号角色")
+    @AccessRoles(values = {CommonConstant.DEFAULT_ROLE_ADMINISTRATOR})
     public ResponseData<Boolean> setAccountRoles(@RequestBody @Valid SetAccountRolesInput input) {
         return coreUserRoleService.setAccountRoles(input);
     }
+
+
+    @PostMapping(value = "/setRoleAccounts")
+    @ApiOperation(value = "设置角色账号")
+    @AccessRoles(values = {CommonConstant.DEFAULT_ROLE_ADMINISTRATOR})
+    public ResponseData<Boolean> setRoleAccounts(@RequestBody @Valid SetRoleAccountsInput input) {
+        return coreUserRoleService.setRoleAccounts(input);
+    }
+
+
 
 }

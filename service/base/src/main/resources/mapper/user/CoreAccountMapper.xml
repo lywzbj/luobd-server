@@ -14,8 +14,10 @@
             t2.email,
             t2.phoneNumber,
             t1.remark,
-            t1.createTime
+            t1.createTime,
+            group_concat(t3.roleId) as roleGroupConcat
         from core_account t1 inner join core_user_info t2 on t1.userInfoId = t2.id
+        left join core_user_role t3 on t1.id = t3.accountId
         <where>
         <if test="input.searchInfo != null and input.searchInfo !=''">
             and (
@@ -35,8 +37,10 @@
         <if test="input.phoneNumber != null and input.phoneNumber != ''">
             and t2.phoneNumber like concat('%',#{input.phoneNumber},'%')
         </if>
+        <if test="input.roleId != null and input.roleId != ''">
+            and t3.roleId = #{input.roleId}
+        </if>
         </where>
-
-
+        group by t1.id
     </select>
 </mapper>

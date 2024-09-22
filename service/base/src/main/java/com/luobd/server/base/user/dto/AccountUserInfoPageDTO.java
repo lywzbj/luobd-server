@@ -1,11 +1,13 @@
 package com.luobd.server.base.user.dto;
 
 
+import com.google.common.collect.Sets;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @ApiModel(description = "账号用户信息分页查询结果")
 @Data
@@ -35,4 +37,16 @@ public class AccountUserInfoPageDTO {
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
+    @ApiModelProperty(value = "角色ID列表")
+    private Set<String> roleIds;
+
+    private String roleGroupConcat;
+
+    public void setRoleGroupConcat(String roleGroupConcat) {
+        this.roleGroupConcat = roleGroupConcat;
+        if (roleGroupConcat != null && !roleGroupConcat.isEmpty()) {
+            String[] strings = roleGroupConcat.split(",");
+            roleIds = Sets.newHashSet(strings);
+        }
+    }
 }

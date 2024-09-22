@@ -6,6 +6,7 @@ import com.luobd.server.base.roles.dto.UserRolePageDTO;
 import com.luobd.server.base.roles.entity.CoreUserRole;
 import com.luobd.server.base.roles.input.AddUserRoleInput;
 import com.luobd.server.base.roles.input.SetAccountRolesInput;
+import com.luobd.server.base.roles.input.SetRoleAccountsInput;
 import com.luobd.server.base.roles.input.UserRolePageInput;
 import com.luobd.server.base.roles.mapper.CoreUserRoleMapper;
 import com.luobd.server.base.roles.service.ICoreUserRoleService;
@@ -102,6 +103,28 @@ public class CoreUserRoleServiceImpl extends ServiceImpl<CoreUserRoleMapper, Cor
             coreUserRole.setId(SnowIdWorker.nextId());
             coreUserRole.setAccountId(entity.getAccountId());
             coreUserRole.setRoleId(roleId);
+            return coreUserRole;
+        }).collect(Collectors.toList());
+        this.saveBatch(coreUserRoles);
+        return ResponseData.success(Boolean.TRUE);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseData<Boolean> setRoleAccounts(SetRoleAccountsInput entity) {
+        QueryWrapper<CoreUserRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("roleId",entity.getRoleId());
+        queryWrapper.in("accountId",entity.getAccountIds());
+        int count = this.count(queryWrapper);
+        if(count > 0) {
+            log.error("角色:{}已存在账户:{},直接返回",entity.getRoleId(),entity.getAccountIds());
+            return ResponseData.error("重复添加");
+        }
+        List<CoreUserRole> coreUserRoles = entity.getAccountIds().stream().map(accountId -> {
+            CoreUserRole coreUserRole = new CoreUserRole();
+            coreUserRole.setId(SnowIdWorker.nextId());
+            coreUserRole.setAccountId(accountId);
+            coreUserRole.setRoleId(entity.getRoleId());
             return coreUserRole;
         }).collect(Collectors.toList());
         this.saveBatch(coreUserRoles);
