@@ -3,7 +3,6 @@ package com.luobd.server;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.springframework.mail.SimpleMailMessage;
 
 /**
  * Unit test for simple App.

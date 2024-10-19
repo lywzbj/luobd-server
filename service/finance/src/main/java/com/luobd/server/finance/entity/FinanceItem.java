@@ -63,5 +63,8 @@ public class FinanceItem implements Serializable {
     @TableField(value = "updateUserId",fill = FieldFill.UPDATE)
     private Long updateUserId;
 
+    @TableField(value = "type")
+    private Integer type;
+
 
 }

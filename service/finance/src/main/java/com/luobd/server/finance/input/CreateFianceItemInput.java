@@ -31,6 +31,12 @@ public class CreateFianceItemInput implements BaseInput<FinanceItem> {
     private String remark;
 
 
+
+    @ApiModelProperty(value = "流水类型 1-收入  -1-支出",required = true)
+    @NotNull(message = "请指定流水类型")
+    private Integer type;
+
+
     @Override
     public FinanceItem toEntity() {
         FinanceItem financeItem = new FinanceItem();
@@ -38,6 +44,7 @@ public class CreateFianceItemInput implements BaseInput<FinanceItem> {
         financeItem.setAmount(amount);
         financeItem.setRemark(remark);
         financeItem.setOccurTime(occurTime == null ? LocalDateTime.now() : occurTime);
+        financeItem.setType(type);
         return financeItem;
     }
 }
